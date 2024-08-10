@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angle Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e6f3ff;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #0077be;
+            margin-top: 0;
+        }
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #0077be;
+            border-radius: 5px;
+        }
+        input[type="range"] {
+            width: 300px;
+            margin: 20px 0;
+        }
+        #radioButtons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        input[type="radio"] {
+            display: none;
+        }
+        label {
+            padding: 5px 10px;
+            background-color: #e6f3ff;
+            border: 1px solid #0077be;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="radio"]:checked + label {
+            background-color: #0077be;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Angle Selector</h2>
+        <input type="number" id="angleInput" min="0" max="360" value="0">
+        <br><br>
+        <input type="range" id="angleSlider" min="0" max="360" value="0">
+        <br><br>
+        <div id="radioButtons">
+            <input type="radio" name="anglePreset" value="0" id="angle0" checked>
+            <label for="angle0">0°</label>
+            <input type="radio" name="anglePreset" value="45" id="angle45">
+            <label for="angle45">45°</label>
+            <input type="radio" name="anglePreset" value="60" id="angle60">
+            <label for="angle60">60°</label>
+            <input type="radio" name="anglePreset" value="90" id="angle90">
+            <label for="angle90">90°</label>
+            <input type="radio" name="anglePreset" value="180" id="angle180">
+            <label for="angle180">180°</label>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript remains the same as in the previous version
+        const angleInput = document.getElementById('angleInput');
+        const angleSlider = document.getElementById('angleSlider');
+        const radioButtons = document.querySelectorAll('input[name="anglePreset"]');
+
+        function updateAngle(value) {
+            value = ((value % 360) + 360) % 360;
+            angleInput.value = value;
+            angleSlider.value = value;
+            radioButtons.forEach(radio => {
+                radio.checked = (radio.value == value);
+            });
+        }
+
+        angleInput.addEventListener('input', (e) => {
+            updateAngle(e.target.value);
+        });
+
+        angleSlider.addEventListener('input', (e) => {
+            updateAngle(e.target.value);
+        });
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    updateAngle(e.target.value);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
